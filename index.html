@@ -11,14 +11,14 @@
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status == 200) {
                         var data = JSON.parse(xhr.responseText);
-                        var price = data.data && data.data.SOL ? data.data.SOL.price : "N/A";
+                        var price = data.data && data.data.JUP ? data.data.JUP.price : "N/A";
                         updatePriceDisplay(price);
                     } else {
                         updatePriceDisplay("Error");
                     }
                 }
             };
-            xhr.open('GET', 'https://price.jup.ag/v4/price?ids=SOL', true);
+            xhr.open('GET', 'https://price.jup.ag/v4/price?ids=JUP', true);
             xhr.send();
         }
 
