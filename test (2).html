@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Token Price Tracker</title>
+    <script>
+        // Function to fetch token price
+        function fetchTokenPrice() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    if (xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        var price = data.data && data.data.SOL ? data.data.SOL.price : "N/A";
+                        updatePriceDisplay(price);
+                    } else {
+                        updatePriceDisplay("Error");
+                    }
+                }
+            };
+            xhr.open('GET', 'https://price.jup.ag/v4/price?ids=SOL', true);
+            xhr.send();
+        }
+
+        // Function to update the price display
+        function updatePriceDisplay(price) {
+            var priceElement = document.getElementById('price');
+            priceElement.textContent = price;
+            priceElement.style.color = price === 'N/A' ? 'red' : 'black';
+        }
+
+        // Set interval to fetch token price every half a second
+        setInterval(fetchTokenPrice, 500);
+
+        // Fetch the initial token price on page load
+        window.onload = fetchTokenPrice;
+    </script>
+</head>
+<body>
+    
+    <div><h1>JUP: <span id="price">Loading...</span></h1></div>
+</body>
+</html>
